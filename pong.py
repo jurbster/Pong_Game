@@ -1,4 +1,4 @@
-# Simple Pong game
+# Simple Pong Game
 
 import turtle
 
@@ -33,6 +33,8 @@ ball.shape("square")
 ball.color("light blue")
 ball.penup()
 ball.goto(0, 0)
+ball.dx = 0.3
+ball.dy = -0.3
 
 # Move paddles
 def paddle_left_up():
@@ -64,3 +66,35 @@ window.onkeypress(paddle_right_down, "Down")
 # Main game loop
 while True:
     window.update()
+
+# Move the ball
+    ball.setx(ball.xcor() + ball.dx)
+    ball.sety(ball.ycor() + ball.dy)
+
+# Check for edge of screen
+    # Top and Bottom
+    if ball.ycor() > 290:
+        ball.sety(290)
+        ball.dy *= -1
+    
+    if ball.ycor() < -290:
+        ball.sety(-290)
+        ball.dy *= -1
+
+    # Left and Right
+    if ball.xcor() > 390:
+        ball.goto(0, 0)
+        ball.dx *= -1
+
+    if ball.xcor() < -390:
+        ball.goto(0, 0)
+        ball.dx *= -1
+
+# Ball and paddle collide
+    if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < paddle_right.ycor() + 50 and ball.ycor() > paddle_right.ycor() - 50):
+        ball.setx(340)
+        ball.dx *= -1
+
+    if (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < paddle_left.ycor() + 50 and ball.ycor() > paddle_left.ycor() - 50):
+        ball.setx(-340)
+        ball.dx *= -1
